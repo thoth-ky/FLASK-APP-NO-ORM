@@ -45,15 +45,16 @@ class Table(DB):
   def get_one_where(self, column_name, value, **kwargs):
     extra_conditions = ""
     for column, value in kwargs:
-      extra_conditions += f" AND {column}={value}"
-    query = f"SELECT * FROM {self.table_name} WHERE {column_name}={value} {extra_conditions};"
-    result = self.execute(query)[0]
+      extra_conditions += f" AND {column}='{value}''"
+    query = f"SELECT * FROM {self.table_name} WHERE {column_name}='{value}' {extra_conditions};"
+    result = self.execute(query)
     if result:
-      self.user_id = result[0]
-      self.username=result[1]
-      self.email=result[2]
-      self.password_hash = result[3]
-    return self
+      self.user_id = result[0][0]
+      self.username=result[0][1]
+      self.email=result[0][2]
+      self.password_hash = result[0][3]
+      return self
+    return result
 
 class User(Table):
   table_name = 'users'
@@ -71,8 +72,8 @@ class User(Table):
   def check_password(self, password):
     return check_password_hash(self.password_hash, password)
   
-  @classmethod
-  def create_table(self):
+  @staticmethod
+  def create_table():
     query = """CREATE TABLE IF NOT EXISTS users(
       user_id serial not null primary key,
       username  varchar not null,

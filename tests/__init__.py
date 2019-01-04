@@ -18,5 +18,15 @@ class BaseTestCase(TestCase):
       'password': 'password' 
     }
 
+    self.user_info_login = {
+      'username': 'user',
+      'password': 'password' 
+    }
+
+    self.user_info_wrong_login = {
+      'username': 'user',
+      'password': 'wrongpassword' 
+    }
+
   def tearDown(self):
     self.db.destroy_tables()

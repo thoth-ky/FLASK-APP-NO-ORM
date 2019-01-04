@@ -18,16 +18,18 @@ def create_tables():
   try:
     db.create_tables()
     print('>>>Successfully created tables')
-  except:
+  except Exception as err:
     print('>>>An error occured during create tables operation')
+    print(f'Error: {str(err)}')
 
 @APP.cli.command()
 def drop_tables():
   try:
     db.destroy_table()
     print('>>>Successfully dropped tables')
-  except:
+  except Exception as err:
     print('>>>An error occured during drop tables operation')
+    print(f'Error: {str(err)}')
 
 @APP.shell_context_processor
 def make_shell_context():

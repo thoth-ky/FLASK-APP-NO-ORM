@@ -17,6 +17,5 @@ class TestModelsSetUp(BaseTestCase):
     user_id = user_created.user_id
     retrieved = self.user_table().get_one_where('user_id', user_id)
     self.assertEqual(user_created.username, retrieved.username)
-    # check if retrieved user asserts true the original password
     self.assertTrue(retrieved.check_password(self.user_info['password']))
     self.assertFalse(retrieved.check_password('wrongpassword'))
